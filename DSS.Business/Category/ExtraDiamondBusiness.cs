@@ -1,5 +1,6 @@
 ﻿using DSS.Business.Base;
 using DSS.Common;
+using DSS.Data;
 using DSS.Data.Dao;
 using DSS.Data.Models;
 using System;
@@ -20,19 +21,21 @@ namespace DSS.Business.Category
     }
     public class ExtraDiamondBusiness : IExtraDiamondBusiness
     {
-        private readonly ExtraDiamondDAO _DAO;
+        //private readonly ExtraDiamondDAO _DAO;
+        private readonly UnitOfWork _unitOfWork;
         public ExtraDiamondBusiness()
         {
-            _DAO = new ExtraDiamondDAO();
+            //_DAO = new ExtraDiamondDAO();
+            _unitOfWork ??= new UnitOfWork();
         }
         public async Task<IBusinessResult> DeleteById(int code)
         {
             try
             {
-                var extraDiamond = await _DAO.GetByIdAsync(code);
+                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
                 if (extraDiamond != null)
                 {
-                    var result = await _DAO.RemoveAsync(extraDiamond);
+                    var result = await _unitOfWork.ExtraDiamondRepository.RemoveAsync(extraDiamond);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -61,7 +64,7 @@ namespace DSS.Business.Category
                 #endregion
 
                 //var currencies = _DAO.GetAll();
-                var extraDiamonds = await _DAO.GetAllAsync();
+                var extraDiamonds = await _unitOfWork.ExtraDiamondRepository.GetAllAsync();
 
                 if (extraDiamonds == null)
                 {
@@ -85,7 +88,7 @@ namespace DSS.Business.Category
                 #region Business rule
                 #endregion
 
-                var extraDiamond = await _DAO.GetByIdAsync(code);
+                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
 
                 if (extraDiamond == null)
                 {
@@ -106,7 +109,9 @@ namespace DSS.Business.Category
         {
             try
             {
-                int result = await _DAO.CreateAsync(extraDiamond);
+                //int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
+                _unitOfWork.ExtraDiamondRepository.PrepareCreate(extraDiamond);
+                int result = await _unitOfWork.ExtraDiamondRepository.SaveAsync();
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -126,7 +131,7 @@ namespace DSS.Business.Category
         {
             try
             {
-                int result = await _DAO.UpdateAsync(extraDiamond);
+                int result = await _unitOfWork.ExtraDiamondRepository.UpdateAsync(extraDiamond);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);

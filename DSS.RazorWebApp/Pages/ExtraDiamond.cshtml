@@ -1,0 +1,42 @@
+﻿@page
+@model DSS.RazorWebApp.Pages.ExtraDiamondModel
+@{
+    ViewData["Title"] = "Extra Diamond List";
+}
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a href="#" class="btn btn-primary">
+                <i class="bi bi-patch-plus"></i>
+                ADD NEW
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var extra in Model.extraDiamonds.OrderBy(e => e.ExtraDiamondId))
+        {
+            <tr>
+                <td>@extra.Name</td>
+                <td>@extra.Title</td>
+                <td>@extra.Quantity</td>
+                <td>@extra.Price</td>
+                <td>@extra.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

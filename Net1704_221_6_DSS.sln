@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSS.Business", "DSS.Busines
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSS.RazorWebApp", "DSS.RazorWebApp\DSS.RazorWebApp.csproj", "{5EB8D9A4-9859-4EB1-B6BA-A065444D9509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSS.Common", "DSS.Common\DSS.Common.csproj", "{2A15B56F-6968-4E77-8F72-072A57FFD9C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSS.Common", "DSS.Common\DSS.Common.csproj", "{2A15B56F-6968-4E77-8F72-072A57FFD9C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
