@@ -28,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var extra in Model.extraDiamonds.OrderBy(e => e.ExtraDiamondId))
+        @foreach (var extra in Model.ExtraDiamonds.OrderBy(e => e.ExtraDiamondId))
         {
             <tr>
                 <td>@extra.Name</td>
