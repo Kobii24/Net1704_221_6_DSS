@@ -14,8 +14,10 @@ namespace DSS.Business.Category
     public interface IExtraDiamondBusiness
     {
         Task<IBusinessResult> GetAll();
+        Task<IBusinessResult> Create(ExtraDiamond extraDiamond);
         Task<IBusinessResult> GetById(int code);
         Task<IBusinessResult> Save(ExtraDiamond extraDiamond);
+        
         Task<IBusinessResult> Update(ExtraDiamond extraDiamond);
         Task<IBusinessResult> DeleteById(int code);
     }
@@ -28,6 +30,27 @@ namespace DSS.Business.Category
             //_DAO = new ExtraDiamondDAO();
             _unitOfWork ??= new UnitOfWork();
         }
+
+        public async Task<IBusinessResult> Create(ExtraDiamond extraDiamond)
+        {
+            try
+            {
+                int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
+                if (result > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_UPDATE_CODE, Const.FAIL_UPDATE_MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
+            }
+        }
+
         public async Task<IBusinessResult> DeleteById(int code)
         {
             try
@@ -80,7 +103,10 @@ namespace DSS.Business.Category
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
-
+        public async Task<int> SaveAll()
+        {
+            return await _unitOfWork.ExtraDiamondRepository.SaveAsync();
+        }
         public async Task<IBusinessResult> GetById(int code)
         {
             try

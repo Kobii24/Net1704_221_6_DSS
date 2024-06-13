@@ -15,5 +15,6 @@ namespace DSS.Data.Repository
         {
             
         }
+        public ExtraDiamondRepository(Net1704_221_6_DSSContext context) => _context = context; 
     }
 }

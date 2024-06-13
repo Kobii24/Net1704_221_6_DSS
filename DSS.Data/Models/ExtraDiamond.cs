@@ -7,7 +7,7 @@ namespace DSS.Data.Models;
 
 public partial class ExtraDiamond
 {
-    public long ExtraDiamondId { get; set; }
+    public int ExtraDiamondId { get; set; }
 
     public string Name { get; set; }
 
@@ -15,9 +15,7 @@ public partial class ExtraDiamond
 
     public int Quantity { get; set; }
 
-    public long Price { get; set; }
+    public decimal Price { get; set; }
 
     public bool Status { get; set; }
-
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

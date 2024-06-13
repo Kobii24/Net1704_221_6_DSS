@@ -18,8 +18,4 @@ public partial class Order
     public string PaymentMethod { get; set; }
 
     public string PaymentStatus { get; set; }
-
-    public virtual Customer Customer { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

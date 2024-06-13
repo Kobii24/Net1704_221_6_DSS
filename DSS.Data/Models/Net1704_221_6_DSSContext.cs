@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DSS.Data.Models;
 
@@ -10,8 +11,8 @@ public partial class Net1704_221_6_DSSContext : DbContext
 {
     public Net1704_221_6_DSSContext()
     {
+        
     }
-
     public Net1704_221_6_DSSContext(DbContextOptions<Net1704_221_6_DSSContext> options)
         : base(options)
     {
@@ -32,13 +33,23 @@ public partial class Net1704_221_6_DSSContext : DbContext
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlServer("data source=QUOCHUYHO\\MSSQLSERVER01;initial catalog=Net1704_221_6_DSS;user id=sa;password=123;Integrated Security=True;TrustServerCertificate=True");
+    //    base.OnConfiguring(optionsBuilder);
+    //}
+    public static string GetConnectionString(string connectionStringName)
     {
-        optionsBuilder.UseSqlServer("data source=QUOCHUYHO\\MSSQLSERVER01;initial catalog=Net1704_221_6_DSS;user id=sa;password=123;Integrated Security=True;TrustServerCertificate=True");
-        base.OnConfiguring(optionsBuilder);
-    }
+        var config = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
 
+        string connectionString = config.GetConnectionString(connectionStringName);
+        return connectionString;
+    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CompanyInformation>(entity =>
@@ -128,6 +139,7 @@ public partial class Net1704_221_6_DSSContext : DbContext
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("origin");
+            entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Status).HasColumnName("status");
         });
 
@@ -143,7 +155,9 @@ public partial class Net1704_221_6_DSSContext : DbContext
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("name");
-            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Price)
+                .HasColumnType("decimal(18, 0)")
+                .HasColumnName("price");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Title)
@@ -213,11 +227,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.TotalAmount)
                 .HasColumnType("decimal(8, 2)")
                 .HasColumnName("total_amount");
-
-            entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.CustomerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("orders_customer_id_foreign");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -233,16 +242,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("order_details_order_id_foreign");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("order_details_product_id_foreign");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -267,21 +266,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.Size).HasColumnName("size");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.TotalAmount).HasColumnName("total_amount");
-
-            entity.HasOne(d => d.DiamondShell).WithMany(p => p.Products)
-                .HasForeignKey(d => d.DiamondShellId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("products_diamond_shell_id_foreign");
-
-            entity.HasOne(d => d.ExtraDiamond).WithMany(p => p.Products)
-                .HasForeignKey(d => d.ExtraDiamondId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("products_extra_diamond_id_foreign");
-
-            entity.HasOne(d => d.MainDiamond).WithMany(p => p.Products)
-                .HasForeignKey(d => d.MainDiamondId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("products_main_diamond_id_foreign");
         });
 
         OnModelCreatingPartial(modelBuilder);

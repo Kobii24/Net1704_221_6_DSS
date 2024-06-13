@@ -30,12 +30,4 @@ public partial class Product
     public double Fee { get; set; }
 
     public double TotalAmount { get; set; }
-
-    public virtual DiamondShell DiamondShell { get; set; }
-
-    public virtual ExtraDiamond ExtraDiamond { get; set; }
-
-    public virtual MainDiamond MainDiamond { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

@@ -15,5 +15,5 @@ public partial class DiamondShell
 
     public bool Status { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public double Price { get; set; }
 }
