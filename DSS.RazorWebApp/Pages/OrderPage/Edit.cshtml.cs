@@ -56,7 +56,7 @@ namespace DSS.RazerWebApp.Pages.OrderPage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(Order.OrderId))
+                if (!OrderExists((int)Order.OrderId))
                 {
                     return NotFound();
                 }

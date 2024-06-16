@@ -1,7 +1,7 @@
 ﻿using DSS.Business.Base;
 using DSS.Common;
 using DSS.Data;
-using DSS.Data.DAO;
+using DSS.Data.Dao;
 using DSS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace DSS.Business.Business
 
         public async Task<int> SaveAll()
         {
-            return await _unitOfWork.OrderDetailRepository.SaveAll();
+            return await _unitOfWork.OrderDetailRepository.SaveAsync();
         }
         public async Task<IBusinessResult> GetAll()
         {

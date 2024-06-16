@@ -7,11 +7,11 @@ namespace DSS.Data.Models;
 
 public partial class Order
 {
-    public long OrderId { get; set; }
+    public int OrderId { get; set; }
 
-    public long CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
-    public long OrderDate { get; set; }
+    public DateOnly OrderDate { get; set; }
 
     public decimal TotalAmount { get; set; }
 

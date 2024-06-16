@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSS.Business.Category
+namespace DSS.Business.Business
 {
     public interface IExtraDiamondBusiness
     {
@@ -17,7 +17,7 @@ namespace DSS.Business.Category
         Task<IBusinessResult> Create(ExtraDiamond extraDiamond);
         Task<IBusinessResult> GetById(int code);
         Task<IBusinessResult> Save(ExtraDiamond extraDiamond);
-        
+
         Task<IBusinessResult> Update(ExtraDiamond extraDiamond);
         Task<IBusinessResult> DeleteById(int code);
     }

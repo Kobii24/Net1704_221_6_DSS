@@ -33,11 +33,7 @@ public partial class Net1704_221_6_DSSContext : DbContext
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.UseSqlServer("data source=QUOCHUYHO\\MSSQLSERVER01;initial catalog=Net1704_221_6_DSS;user id=sa;password=123;Integrated Security=True;TrustServerCertificate=True");
-    //    base.OnConfiguring(optionsBuilder);
-    //}
+
     public static string GetConnectionString(string connectionStringName)
     {
         var config = new ConfigurationBuilder()
@@ -50,6 +46,7 @@ public partial class Net1704_221_6_DSSContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CompanyInformation>(entity =>
