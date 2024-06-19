@@ -21,6 +21,9 @@ namespace DSS.RazorWebApp.Pages.NewFolder
         }
 
         public IList<Customer> Customer { get;set; } = default!;
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 6;
+        public int TotalPages { get; set; }
         public async Task OnGetAsync(string searchBy, string search, int? pageNumber)
         {
             var result = await _business.GetAll();
