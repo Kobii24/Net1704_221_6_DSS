@@ -9,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
 using DSS.Business.Business;
 
-namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
+namespace DSS.RazerWebApp.Pages.OrderDetailPage
 {
     public class EditModel : PageModel
     {
-        private readonly ExtraDiamondBusiness _business;
+        private readonly OrderDetail_Business _business;
 
         public EditModel()
         {
-            _business ??= new ExtraDiamondBusiness();
+            _business = new OrderDetail_Business();
         }
 
         [BindProperty]
-        public ExtraDiamond ExtraDiamond { get; set; } = default!;
+        public OrderDetail? OrderDetail { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -30,12 +30,12 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
                 return NotFound();
             }
 
-            var extradiamond = await _business.GetById(id);
-            if (extradiamond.Data == null)
+            var orderDetail = await _business.GetById(id);
+            if (orderDetail == null)
             {
                 return NotFound();
             }
-            ExtraDiamond = (ExtraDiamond)extradiamond.Data;
+            OrderDetail = (OrderDetail)orderDetail.Data;
             return Page();
         }
 
@@ -48,15 +48,15 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
                 return Page();
             }
 
-            _business.Update(ExtraDiamond);
+            _business.Update(OrderDetail);
 
             try
             {
-                await _business.Save(ExtraDiamond);
+                await _business.Save(OrderDetail);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ExtraDiamondExists(ExtraDiamond.ExtraDiamondId))
+                if (!OrderExists((int)OrderDetail.OrderId))
                 {
                     return NotFound();
                 }
@@ -69,7 +69,7 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
             return RedirectToPage("./Index");
         }
 
-        private bool ExtraDiamondExists(int id)
+        private bool OrderExists(int id)
         {
             return (bool)_business.GetById(id).Result.Data;
         }

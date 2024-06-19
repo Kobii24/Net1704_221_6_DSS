@@ -1,6 +1,7 @@
 ﻿using DSS.Business.Base;
 using DSS.Common;
 using DSS.Data;
+using DSS.Data.Dao;
 using DSS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -8,32 +9,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSS.Business.Category
+namespace DSS.Business.Business
 {
-    public interface ICustomerBusiness
+    public interface IExtraDiamondBusiness
     {
         Task<IBusinessResult> GetAll();
-        Task<IBusinessResult> Create(Customer customer);
-        Task<IBusinessResult> GetById(int id);
-        Task<IBusinessResult> Save(Customer customer);
-
-        Task<IBusinessResult> Update(Customer customer);
-        Task<IBusinessResult> DeleteById(int id);
-        Task<int> SaveAll();
+        Task<IBusinessResult> Create(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> GetById(int code);
+      
+        Task<IBusinessResult> Save(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> Update(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> DeleteById(int code);
     }
-    public class CustomerBusiness : ICustomerBusiness
+    public class ExtraDiamondBusiness : IExtraDiamondBusiness
     {
+        //private readonly ExtraDiamondDAO _DAO;
         private readonly UnitOfWork _unitOfWork;
-        public CustomerBusiness()
+        public ExtraDiamondBusiness()
         {
+            //_DAO = new ExtraDiamondDAO();
             _unitOfWork ??= new UnitOfWork();
         }
 
-        public async Task<IBusinessResult> Create(Customer customer)
+        public async Task<IBusinessResult> Create(ExtraDiamond extraDiamond)
         {
             try
             {
-                int result = await _unitOfWork.CustomerRepository.CreateAsync(customer);
+                int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
@@ -49,14 +51,14 @@ namespace DSS.Business.Category
             }
         }
 
-        public async Task<IBusinessResult> DeleteById(int id)
+        public async Task<IBusinessResult> DeleteById(int code)
         {
             try
             {
-                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
-                if (customer != null)
+                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
+                if (extraDiamond != null)
                 {
-                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(customer);
+                    var result = await _unitOfWork.ExtraDiamondRepository.RemoveAsync(extraDiamond);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -75,46 +77,52 @@ namespace DSS.Business.Category
             {
                 return new BusinessResult(-4, ex.ToString());
             }
-
         }
 
         public async Task<IBusinessResult> GetAll()
         {
             try
             {
-                var customers = await _unitOfWork.CustomerRepository.GetAllAsync();
+                #region Business rule
+                #endregion
 
-                if (customers == null)
+                //var currencies = _DAO.GetAll();
+                var extraDiamonds = await _unitOfWork.ExtraDiamondRepository.GetAllAsync();
+
+                if (extraDiamonds == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customers);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamonds);
                 }
-
             }
             catch (Exception ex)
             {
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
-
-        public async Task<IBusinessResult> GetById(int id)
+        public async Task<int> SaveAll()
+        {
+            return await _unitOfWork.ExtraDiamondRepository.SaveAsync();
+        }
+        public async Task<IBusinessResult> GetById(int code)
         {
             try
             {
                 #region Business rule
                 #endregion
-                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
 
-                if (customer == null)
+                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
+
+                if (extraDiamond == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customer);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamond);
                 }
             }
             catch (Exception ex)
@@ -123,12 +131,13 @@ namespace DSS.Business.Category
             }
         }
 
-        public async Task<IBusinessResult> Save(Customer customer)
+        public async Task<IBusinessResult> Save(ExtraDiamond extraDiamond)
         {
             try
             {
-                _unitOfWork.CustomerRepository.PrepareCreate(customer);
-                int result = await _unitOfWork.CustomerRepository.SaveAsync();
+                //int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
+                _unitOfWork.ExtraDiamondRepository.PrepareCreate(extraDiamond);
+                int result = await _unitOfWork.ExtraDiamondRepository.SaveAsync();
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -144,16 +153,11 @@ namespace DSS.Business.Category
             }
         }
 
-        public async Task<int> SaveAll()
-        {
-            return await _unitOfWork.CustomerRepository.SaveAsync();
-        }
-
-        public async Task<IBusinessResult> Update(Customer customer)
+        public async Task<IBusinessResult> Update(ExtraDiamond extraDiamond)
         {
             try
             {
-                int result = await _unitOfWork.CustomerRepository.UpdateAsync(customer);
+                int result = await _unitOfWork.ExtraDiamondRepository.UpdateAsync(extraDiamond);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
