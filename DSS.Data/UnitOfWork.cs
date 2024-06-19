@@ -1,5 +1,6 @@
 ﻿using DSS.Data.Models;
 using DSS.Data.Repository;
+using DSS.Data.Repositoty;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace DSS.Data
         private Net1704_221_6_DSSContext _unitOfWorkContext;
         private ExtraDiamondRepository _extraDiamond;
         private CustomerRepository _customerRepository;
+        private OrderRepository _order;
+        private OrderDetailRepository _orderDetail;
+      
         public UnitOfWork()
         {
             _unitOfWorkContext ??= new Net1704_221_6_DSSContext();
@@ -33,6 +37,19 @@ namespace DSS.Data
             get
             {
                 return _customerRepository ??= new Repository.CustomerRepository(_unitOfWorkContext);
+        public OrderRepository OrderRepository
+        {
+            get
+            {
+                return _order ??= new OrderRepository(_unitOfWorkContext);
+            }
+        }
+
+        public OrderDetailRepository OrderDetailRepository
+        {
+            get
+            {
+                return _orderDetail ??= new OrderDetailRepository();
             }
         }
 

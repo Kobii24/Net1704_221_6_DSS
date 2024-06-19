@@ -6,36 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
-using DSS.Business.Business;
 
-namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
+namespace DSS.RazerWebApp.Pages.OrderDetailPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly ExtraDiamondBusiness _business;
+        private readonly DSS.Data.Models.Net1704_221_6_DSSContext _context;
 
-        public DetailsModel()
+        public DetailsModel(DSS.Data.Models.Net1704_221_6_DSSContext context)
         {
-            _business ??= new ExtraDiamondBusiness();
+            _context = context;
         }
 
-        public ExtraDiamond ExtraDiamond { get; set; } = default!;
+        public OrderDetail OrderDetail { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var extradiamond = await _business.GetById(id);
-            if (extradiamond == null)
+            var orderdetail = await _context.OrderDetails.FirstOrDefaultAsync(m => m.OrderDetailId == id);
+            if (orderdetail == null)
             {
                 return NotFound();
             }
             else
             {
-                ExtraDiamond = (ExtraDiamond)extradiamond.Data;
+                OrderDetail = orderdetail;
             }
             return Page();
         }

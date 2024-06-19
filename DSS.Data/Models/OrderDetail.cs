@@ -7,11 +7,11 @@ namespace DSS.Data.Models;
 
 public partial class OrderDetail
 {
-    public long OrderDetailId { get; set; }
+    public int OrderDetailId { get; set; }
 
-    public long OrderId { get; set; }
+    public int OrderId { get; set; }
 
-    public long ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public int Quantity { get; set; }
 

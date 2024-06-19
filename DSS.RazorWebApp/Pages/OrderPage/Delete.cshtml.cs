@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
 using DSS.Business.Business;
 
-namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
+namespace DSS.RazerWebApp.Pages.OrderPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly ExtraDiamondBusiness _business;
+        private readonly Order_Business _business;
 
         public DeleteModel()
         {
-            _business ??= new ExtraDiamondBusiness();
+            _business = new Order_Business();
         }
 
         [BindProperty]
-        public ExtraDiamond ExtraDiamond { get; set; } = default!;
+        public Order Order { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -29,15 +29,15 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
                 return NotFound();
             }
 
-            var extradiamond = await _business.GetById(id);
+            var order = await _business.GetById(id);
 
-            if (extradiamond.Data == null)
+            if (order == null)
             {
                 return NotFound();
             }
             else
             {
-                ExtraDiamond = (ExtraDiamond)extradiamond.Data;
+                Order = (Order) order.Data;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
                 return NotFound();
             }
 
-            var extradiamond = await _business.GetById(id);
-            if (extradiamond.Data != null)
+            var order = await _business.GetById(id);
+            if (order != null)
             {
-                ExtraDiamond = (ExtraDiamond)extradiamond.Data;
-                _business.DeleteById(ExtraDiamond.ExtraDiamondId);
+                Order = (Order) order.Data;
+                _business.Delete(id);
                 _business.SaveAll();
             }
 

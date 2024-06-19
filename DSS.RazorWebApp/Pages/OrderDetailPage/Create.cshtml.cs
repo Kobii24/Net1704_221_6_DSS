@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DSS.Data.Models;
 using DSS.Business.Business;
 
-namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
+namespace DSS.RazerWebApp.Pages.OrderDetailPage
 {
     public class CreateModel : PageModel
     {
-        private readonly ExtraDiamondBusiness _business;
+        private readonly OrderDetail_Business _business;
 
         public CreateModel()
         {
-            _business ??= new ExtraDiamondBusiness();
+            _business = new OrderDetail_Business();
         }
 
         public IActionResult OnGet()
@@ -25,7 +25,7 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
         }
 
         [BindProperty]
-        public ExtraDiamond ExtraDiamond { get; set; } = default!;
+        public OrderDetail OrderDetail { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +35,7 @@ namespace DSS.RazorWebApp.Pages.ExtraDiamondPage
                 return Page();
             }
 
-            await _business.Create(ExtraDiamond);
+            await _business.Create(OrderDetail);
 
             return RedirectToPage("./Index");
         }

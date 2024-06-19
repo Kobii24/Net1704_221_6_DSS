@@ -3,6 +3,7 @@ using DSS.Common;
 using DSS.Data;
 using DSS.Data.Dao;
 using DSS.Data.Models;
+using DSS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,54 +12,34 @@ using System.Threading.Tasks;
 
 namespace DSS.Business.Business
 {
-    public interface IExtraDiamondBusiness
+    public interface OrderInterface
     {
         Task<IBusinessResult> GetAll();
-        Task<IBusinessResult> Create(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> Create(Order order);
         Task<IBusinessResult> GetById(int code);
-      
-        Task<IBusinessResult> Save(ExtraDiamond extraDiamond);
-        Task<IBusinessResult> Update(ExtraDiamond extraDiamond);
-        Task<IBusinessResult> DeleteById(int code);
-    }
-    public class ExtraDiamondBusiness : IExtraDiamondBusiness
+        Task<IBusinessResult> Save(Order order);
+        Task<IBusinessResult> Update(Order order);
+        Task<IBusinessResult> Delete(int code);
+    };
+
+    public class Order_Business : OrderInterface
     {
-        //private readonly ExtraDiamondDAO _DAO;
-        private readonly UnitOfWork _unitOfWork;
-        public ExtraDiamondBusiness()
+        private UnitOfWork _unitOfWork ;
+        private Net1704_221_6_DSSContext _DSSContext;
+
+        public Order_Business()
         {
-            //_DAO = new ExtraDiamondDAO();
             _unitOfWork ??= new UnitOfWork();
         }
 
-        public async Task<IBusinessResult> Create(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Delete(int code)
         {
             try
             {
-                int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
-                if (result > 0)
+                var order = await _unitOfWork.OrderRepository.GetByIdAsync(code);
+                if (order != null)
                 {
-                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
-                }
-                else
-                {
-                    return new BusinessResult(Const.FAIL_UPDATE_CODE, Const.FAIL_UPDATE_MSG);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
-            }
-        }
-
-        public async Task<IBusinessResult> DeleteById(int code)
-        {
-            try
-            {
-                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
-                if (extraDiamond != null)
-                {
-                    var result = await _unitOfWork.ExtraDiamondRepository.RemoveAsync(extraDiamond);
+                    var result = await _unitOfWork.OrderRepository.RemoveAsync(order);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -79,6 +60,10 @@ namespace DSS.Business.Business
             }
         }
 
+        public async Task <int> SaveAll()
+        {
+            return await _unitOfWork.OrderRepository.SaveAsync();
+        }
         public async Task<IBusinessResult> GetAll()
         {
             try
@@ -86,16 +71,16 @@ namespace DSS.Business.Business
                 #region Business rule
                 #endregion
 
-                //var currencies = _DAO.GetAll();
-                var extraDiamonds = await _unitOfWork.ExtraDiamondRepository.GetAllAsync();
+                //var currencies = _unitOfWork.OrderRepository.GetAll();
+                var orders = await _unitOfWork.OrderRepository.GetAllAsync() ;
 
-                if (extraDiamonds == null)
+                if (orders == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
-                else
+                else 
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamonds);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, orders);
                 }
             }
             catch (Exception ex)
@@ -103,10 +88,7 @@ namespace DSS.Business.Business
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
-        public async Task<int> SaveAll()
-        {
-            return await _unitOfWork.ExtraDiamondRepository.SaveAsync();
-        }
+
         public async Task<IBusinessResult> GetById(int code)
         {
             try
@@ -114,30 +96,31 @@ namespace DSS.Business.Business
                 #region Business rule
                 #endregion
 
-                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
+                var order = await _unitOfWork.OrderRepository.GetByIdAsync(code);
 
-                if (extraDiamond == null)
+                if (order == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamond);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, order );
                 }
             }
             catch (Exception ex)
             {
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
+
         }
 
-        public async Task<IBusinessResult> Save(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Save(Order order)
         {
             try
             {
-                //int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
-                _unitOfWork.ExtraDiamondRepository.PrepareCreate(extraDiamond);
-                int result = await _unitOfWork.ExtraDiamondRepository.SaveAsync();
+               // int result = await _unitOfWork.OrderRepository.CreateAsync(order);
+               _unitOfWork.OrderRepository.PrepareCreate(order);
+                int result = await _unitOfWork.OrderRepository.SaveAsync();
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -153,11 +136,33 @@ namespace DSS.Business.Business
             }
         }
 
-        public async Task<IBusinessResult> Update(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Update(Order order)
         {
             try
             {
-                int result = await _unitOfWork.ExtraDiamondRepository.UpdateAsync(extraDiamond);
+
+                int result = await _unitOfWork.OrderRepository.UpdateAsync(order);
+                if (result > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_UPDATE_CODE, Const.FAIL_UPDATE_MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
+            }
+        }
+
+        public async Task<IBusinessResult> Create(Order order)
+        {
+            try
+            {
+
+                int result = await _unitOfWork.OrderRepository.CreateAsync(order);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
