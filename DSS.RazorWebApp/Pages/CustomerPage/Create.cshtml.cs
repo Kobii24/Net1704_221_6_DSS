@@ -34,6 +34,7 @@ namespace DSS.RazorWebApp.Pages.NewFolder
             {
                 return Page();
             }
+            Customer.Status = true;
             await _business.Create(Customer);
 
             return RedirectToPage("./Index");
