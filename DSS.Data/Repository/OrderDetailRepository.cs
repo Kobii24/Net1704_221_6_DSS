@@ -1,17 +1,16 @@
-﻿using DSS.Business.Business;
+﻿using DSS.Data.Base;
 using DSS.Data.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSS.Business
+namespace DSS.Data.Repositoty
 {
-    public class DssBusiness : ExtraDiamondBusiness
+    public class OrderDetailRepository : GenericRepository<OrderDetail>
     {
-        public DssBusiness()
+        public OrderDetailRepository()
         {
             
         }
