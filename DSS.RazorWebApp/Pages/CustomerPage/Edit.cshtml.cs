@@ -7,34 +7,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
+using DSS.Business.Category;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
 {
     public class EditModel : PageModel
     {
-        private readonly DSS.Data.Models.Net1704_221_6_DSSContext _context;
+        private readonly CustomerBusiness _business;
 
-        public EditModel(DSS.Data.Models.Net1704_221_6_DSSContext context)
+        public EditModel()
         {
-            _context = context;
+            _business = new CustomerBusiness();
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
+            var customer =  await _business.GetById(id);
+            if (customer.Data == null)
             {
                 return NotFound();
             }
-
-            var customer =  await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            Customer = customer;
+            Customer = (Customer)customer.Data;
             return Page();
         }
 
@@ -47,11 +43,11 @@ namespace DSS.RazorWebApp.Pages.NewFolder
                 return Page();
             }
 
-            _context.Attach(Customer).State = EntityState.Modified;
+            await _business.Update(Customer);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _business.Save(Customer);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -68,9 +64,9 @@ namespace DSS.RazorWebApp.Pages.NewFolder
             return RedirectToPage("./Index");
         }
 
-        private bool CustomerExists(long id)
+        private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return (bool)_business.GetById(id).Result.Data;
         }
     }
 }
