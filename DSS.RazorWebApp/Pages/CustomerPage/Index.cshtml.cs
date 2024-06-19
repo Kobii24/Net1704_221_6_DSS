@@ -20,7 +20,6 @@ namespace DSS.RazorWebApp.Pages.NewFolder
         }
 
         public IList<Customer> Customer { get;set; } = default!;
-
         public async Task OnGetAsync()
         {
             var result = await _business.GetAll();
@@ -29,5 +28,16 @@ namespace DSS.RazorWebApp.Pages.NewFolder
                 Customer = (List<Customer>)result.Data;
             }
         }
+        //public void OnGet(string SearchString)
+        //{
+        //    if (!string.IsNullOrEmpty(SearchString))
+        //    {
+        //        //Customer = Customer.Where(c => c.Name.Contains(SearchString)).ToList();
+        //        Customer = Customer.Where(item => item.Name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)).ToList();
+        //    }
+        //}
     }
+
 }
+
+
