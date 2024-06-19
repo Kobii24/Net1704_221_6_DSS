@@ -91,3 +91,27 @@
 }
     </tbody>
 </table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @if (Model.PageNumber == 1) {
+        <text>disabled</text>
+}">
+            <a class="page-link" href="@Url.Action("Index", "Customers", new { pageNumber = Model.PageNumber - 1 })">Previous</a>
+        </li>
+
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @if (i == Model.PageNumber) {
+        <text>active</text>
+}">
+                        <a class="page-link" href="@Url.Action("Index", "Customers", new { pageNumber = i })">@i</a>
+                </li>
+        }
+
+        <li class="page-item @if (Model.PageNumber == Model.TotalPages) {
+        <text>disabled</text>
+}">
+            <a class="page-link" href="@Url.Action("Index", "Customers", new { pageNumber = Model.PageNumber + 1 })">Next</a>
+        </li>
+    </ul>
+</nav>
