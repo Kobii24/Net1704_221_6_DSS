@@ -16,7 +16,7 @@ namespace DSS.RazorWebApp.Pages.NewFolder
 
         public IndexModel()
         {
-            _business = new CustomerBusiness();
+            _business ??= new CustomerBusiness();
         }
 
         public IList<Customer> Customer { get;set; } = default!;

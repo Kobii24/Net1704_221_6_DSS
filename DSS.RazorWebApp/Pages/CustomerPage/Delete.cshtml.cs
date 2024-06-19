@@ -6,54 +6,44 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
+using DSS.Business.Category;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
 {
     public class DeleteModel : PageModel
     {
-        private readonly DSS.Data.Models.Net1704_221_6_DSSContext _context;
+        private readonly CustomerBusiness _business;
 
-        public DeleteModel(DSS.Data.Models.Net1704_221_6_DSSContext context)
+        public DeleteModel()
         {
-            _context = context;
+            _business ??= new CustomerBusiness(); 
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var customer = await _business.GetById(id);
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
-
-            if (customer == null)
+            if (customer.Data == null)
             {
                 return NotFound();
             }
             else
             {
-                Customer = customer;
+                Customer = (Customer)customer.Data;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(long? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            var customer = await _business.GetById(id);
+            if (customer.Data != null)
             {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
-            {
-                Customer = customer;
-                _context.Customers.Remove(Customer);
-                await _context.SaveChangesAsync();
+                await _business.DeleteById(id);
+                await _business.SaveAll();
             }
 
             return RedirectToPage("./Index");

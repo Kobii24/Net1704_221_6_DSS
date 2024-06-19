@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DSS.Data.Models;
+using DSS.Business.Category;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
 {
     public class CreateModel : PageModel
     {
-        private readonly DSS.Data.Models.Net1704_221_6_DSSContext _context;
+        private readonly CustomerBusiness _business;
 
-        public CreateModel(DSS.Data.Models.Net1704_221_6_DSSContext context)
+        public CreateModel()
         {
-            _context = context;
+            _business ??= new CustomerBusiness();
         }
 
         public IActionResult OnGet()
@@ -33,9 +34,7 @@ namespace DSS.RazorWebApp.Pages.NewFolder
             {
                 return Page();
             }
-
-            _context.Customers.Add(Customer);
-            await _context.SaveChangesAsync();
+            await _business.Create(Customer);
 
             return RedirectToPage("./Index");
         }

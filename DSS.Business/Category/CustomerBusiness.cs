@@ -100,9 +100,27 @@ namespace DSS.Business.Category
             }
         }
 
-        public Task<IBusinessResult> GetById(int code)
+        public async Task<IBusinessResult> GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                #region Business rule
+                #endregion
+                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+
+                if (customer == null)
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customer);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
         }
 
         public async Task<IBusinessResult> Save(Customer customer)
