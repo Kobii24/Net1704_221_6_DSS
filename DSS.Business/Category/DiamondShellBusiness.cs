@@ -10,30 +10,29 @@ using System.Threading.Tasks;
 
 namespace DSS.Business.Category
 {
-    public interface ICustomerBusiness
+    public interface IDiamondShellBussiness
     {
         Task<IBusinessResult> GetAll();
-        Task<IBusinessResult> Create(Customer customer);
+        Task<IBusinessResult> Create(DiamondShell diamondShell);
         Task<IBusinessResult> GetById(int id);
-        Task<IBusinessResult> Save(Customer customer);
+        Task<IBusinessResult> Save(DiamondShell diamondShell);
 
-        Task<IBusinessResult> Update(Customer customer);
+        Task<IBusinessResult> Update(DiamondShell diamondShell);
         Task<IBusinessResult> DeleteById(int id);
         Task<int> SaveAll();
     }
-    public class CustomerBusiness : ICustomerBusiness
+    public class DiamondShellBusiness : IDiamondShellBussiness
     {
         private readonly UnitOfWork _unitOfWork;
-        public CustomerBusiness()
+        public DiamondShellBusiness()
         {
             _unitOfWork ??= new UnitOfWork();
         }
-
-        public async Task<IBusinessResult> Create(Customer customer)
+        public async Task<IBusinessResult> Create(DiamondShell diamondShell)
         {
             try
             {
-                int result = await _unitOfWork.CustomerRepository.CreateAsync(customer);
+                int result = await _unitOfWork.DiamondShellRepository.CreateAsync(diamondShell);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
@@ -53,10 +52,10 @@ namespace DSS.Business.Category
         {
             try
             {
-                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
-                if (customer != null)
+                var diamondShells = await _unitOfWork.DiamondShellRepository.GetByIdAsync(id);
+                if (diamondShells != null)
                 {
-                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(customer);
+                    var result = await _unitOfWork.DiamondShellRepository.RemoveAsync(diamondShells);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -75,22 +74,21 @@ namespace DSS.Business.Category
             {
                 return new BusinessResult(-4, ex.ToString());
             }
-
         }
 
         public async Task<IBusinessResult> GetAll()
         {
             try
             {
-                var customers = await _unitOfWork.CustomerRepository.GetAllAsync();
+                var diamondShells = await _unitOfWork.DiamondShellRepository.GetAllAsync();
 
-                if (customers == null)
+                if (diamondShells == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customers);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, diamondShells);
                 }
 
             }
@@ -106,15 +104,15 @@ namespace DSS.Business.Category
             {
                 #region Business rule
                 #endregion
-                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+                var diamondShells = await _unitOfWork.DiamondShellRepository.GetByIdAsync(id);
 
-                if (customer == null)
+                if (diamondShells == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customer);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, diamondShells);
                 }
             }
             catch (Exception ex)
@@ -123,12 +121,12 @@ namespace DSS.Business.Category
             }
         }
 
-        public async Task<IBusinessResult> Save(Customer customer)
+        public async Task<IBusinessResult> Save(DiamondShell diamondShell)
         {
             try
             {
-                _unitOfWork.CustomerRepository.PrepareCreate(customer);
-                int result = await _unitOfWork.CustomerRepository.SaveAsync();
+                _unitOfWork.DiamondShellRepository.PrepareCreate(diamondShell);
+                int result = await _unitOfWork.DiamondShellRepository.SaveAsync();
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -146,14 +144,14 @@ namespace DSS.Business.Category
 
         public async Task<int> SaveAll()
         {
-            return await _unitOfWork.CustomerRepository.SaveAsync();
+            return await _unitOfWork.DiamondShellRepository.SaveAsync();
         }
 
-        public async Task<IBusinessResult> Update(Customer customer)
+        public async Task<IBusinessResult> Update(DiamondShell diamondShell)
         {
             try
             {
-                int result = await _unitOfWork.CustomerRepository.UpdateAsync(customer);
+                int result = await _unitOfWork.DiamondShellRepository.UpdateAsync(diamondShell);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
