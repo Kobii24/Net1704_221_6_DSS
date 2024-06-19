@@ -6,35 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
+using DSS.Business.Category;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
 {
     public class DetailsModel : PageModel
     {
-        private readonly DSS.Data.Models.Net1704_221_6_DSSContext _context;
+        private readonly CustomerBusiness _business;
 
-        public DetailsModel(DSS.Data.Models.Net1704_221_6_DSSContext context)
+        public DetailsModel()
         {
-            _context = context;
+            _business = new CustomerBusiness();
         }
 
         public Customer Customer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
+            var customer = await _business.GetById(id);
             if (customer == null)
             {
                 return NotFound();
             }
             else
             {
-                Customer = customer;
+                Customer = (Customer)customer.Data;
             }
             return Page();
         }
