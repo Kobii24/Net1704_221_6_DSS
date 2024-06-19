@@ -43,11 +43,10 @@ namespace DSS.RazorWebApp.Pages.NewFolder
                     Customer = Customer.Where(item => item.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
                 }
             }
+            PageNumber = pageNumber ?? 1;
+            TotalPages = (int)System.Math.Ceiling(Customer.ToList().Count / (double)PageSize);
+            Customer = Customer.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
         }
-    PageNumber = pageNumber ?? 1;
-    TotalPages = (int) System.Math.Ceiling(ExtraDiamond.ToList().Count / (double) PageSize);
-        ExtraDiamond = ExtraDiamond.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
-
     }
 
 }
