@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSS.Business.Category
+namespace DSS.Business.Business
 {
     public interface IExtraDiamondBusiness
     {
