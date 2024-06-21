@@ -45,7 +45,7 @@ namespace DSS.RazorWebApp.Pages.DiamondShellPage
                 {
                     DiamondShell = DiamondShell.Where(item =>
                     {
-                        return item.Price == Convert.ToDouble(search); ;
+                        return item.Price == Convert.ToDouble(search);
                     }).ToList();
                 }
             }

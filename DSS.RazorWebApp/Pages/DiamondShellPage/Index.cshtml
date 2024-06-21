@@ -44,27 +44,37 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.DiamondShell) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Origin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.DiamondShellId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.DiamondShellId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.DiamondShellId">Delete</a>
-            </td>
-        </tr>
-}
+        @if (Model.DiamondShell.Count == 0)
+        {
+            <tr>
+                <td colspan="5" class="text-danger">No data found</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.DiamondShell)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Origin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.DiamondShellId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.DiamondShellId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.DiamondShellId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
 <nav aria-label="Page navigation">
