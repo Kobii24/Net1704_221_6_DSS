@@ -15,6 +15,7 @@ namespace DSS.Data
         private ExtraDiamondRepository _extraDiamond;
         private OrderRepository _order;
         private OrderDetailRepository _orderDetail;
+        private ProductRepository _product;
         public UnitOfWork()
         {
             _unitOfWorkContext ??= new Net1704_221_6_DSSContext();
@@ -43,6 +44,13 @@ namespace DSS.Data
             get
             {
                 return _orderDetail ??= new OrderDetailRepository();
+            }
+        }
+        public ProductRepository ProductRepository
+        {
+            get
+            {
+                return _product ??= new Repository.ProductRepository(_unitOfWorkContext);
             }
         }
 

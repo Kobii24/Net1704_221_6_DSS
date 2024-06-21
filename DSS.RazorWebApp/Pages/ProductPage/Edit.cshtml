@@ -1,0 +1,60 @@
+﻿@page
+@model DSS.RazorWebApp.Pages.ProductPage.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Product.ProductId" />
+            <div class="form-group">
+                <label asp-for="Product.Name" class="control-label"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Quantity" class="control-label"></label>
+                <input asp-for="Product.Quantity" class="form-control" />
+                <span asp-validation-for="Product.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Size" class="control-label"></label>
+                <input asp-for="Product.Size" class="form-control" />
+                <span asp-validation-for="Product.Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Amount" class="control-label"></label>
+                <input asp-for="Product.Amount" class="form-control" />
+                <span asp-validation-for="Product.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Fee" class="control-label"></label>
+                <input asp-for="Product.Fee" class="form-control" />
+                <span asp-validation-for="Product.Fee" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.Status" /> @Html.DisplayNameFor(model => model.Product.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
