@@ -7,7 +7,7 @@ namespace DSS.Data.Models;
 
 public partial class MainDiamond
 {
-    public long MainDiamondId { get; set; }
+    public int MainDiamondId { get; set; }
 
     public string Name { get; set; }
 

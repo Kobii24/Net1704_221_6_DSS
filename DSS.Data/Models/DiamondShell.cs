@@ -7,7 +7,7 @@ namespace DSS.Data.Models;
 
 public partial class DiamondShell
 {
-    public long DiamondShellId { get; set; }
+    public int DiamondShellId { get; set; }
 
     public string Name { get; set; }
 
