@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DSS.Common\DSS.Common.csproj" />
-    <ProjectReference Include="..\DSS.Data\DSS.Data.csproj" />
+    <Compile Remove="Category\**" />
+    <EmbeddedResource Remove="Category\**" />
+    <None Remove="Category\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Category\" />
+    <ProjectReference Include="..\DSS.Common\DSS.Common.csproj" />
+    <ProjectReference Include="..\DSS.Data\DSS.Data.csproj" />
   </ItemGroup>
 
 </Project>

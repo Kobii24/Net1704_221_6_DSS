@@ -60,7 +60,7 @@ namespace DSS.RazerWebApp.Pages.OrderPage
                         catch (FormatException ex)
                         {
                             Console.WriteLine(ex.Message);
-                            Order = Order.ToList();
+                            Order = Order.ToList<Order>();
                         }
                     }
                 }

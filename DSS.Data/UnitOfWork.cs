@@ -37,6 +37,8 @@ namespace DSS.Data
             get
             {
                 return _customerRepository ??= new Repository.CustomerRepository(_unitOfWorkContext);
+            }
+        }
         public OrderRepository OrderRepository
         {
             get

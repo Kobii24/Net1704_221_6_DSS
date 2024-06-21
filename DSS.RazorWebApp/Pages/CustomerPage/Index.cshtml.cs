@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
-using DSS.Business.Category;
+using DSS.Business.Business;
 using System.Drawing.Printing;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
@@ -14,16 +14,16 @@ namespace DSS.RazorWebApp.Pages.NewFolder
     public class IndexModel : PageModel
     {
         private readonly CustomerBusiness _business;
-
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 6;
+        public int TotalPages { get; set; }
         public IndexModel()
         {
             _business ??= new CustomerBusiness();
         }
 
         public IList<Customer> Customer { get;set; } = default!;
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 6;
-        public int TotalPages { get; set; }
+        
         public async Task OnGetAsync(string searchBy, string search, int? pageNumber)
         {
             var result = await _business.GetAll();
@@ -35,15 +35,15 @@ namespace DSS.RazorWebApp.Pages.NewFolder
             {
                 if (searchBy == "Name")
                 {
-                    Customer = Customer.Where(item => item.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+                    Customer = Customer.Where(item => item.Name.ToLower().Contains(search.ToLower())).ToList();
                 }
                 else if (searchBy == "Address")
                 {
-                    Customer = Customer.Where(item => item.Address.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+                    Customer = Customer.Where(item => item.Address.ToLower().Contains(search.ToLower())).ToList();
                 }
                 else if (searchBy == "Phone")
                 {
-                    Customer = Customer.Where(item => item.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+                    Customer = Customer.Where(item => item.Phone.ToLower().Contains(search.ToLower())).ToList();
                 }
             }
             PageNumber = pageNumber ?? 1;
