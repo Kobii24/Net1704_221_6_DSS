@@ -9,13 +9,13 @@ namespace DSS.Data.Models;
 
 public partial class Net1704_221_6_DSSContext : DbContext
 {
-    public Net1704_221_6_DSSContext()
-    {
-        
-    }
     public Net1704_221_6_DSSContext(DbContextOptions<Net1704_221_6_DSSContext> options)
         : base(options)
     {
+    }
+    public Net1704_221_6_DSSContext()
+    {
+        
     }
 
     public virtual DbSet<CompanyInformation> CompanyInformations { get; set; }
@@ -33,7 +33,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-
     public static string GetConnectionString(string connectionStringName)
     {
         var config = new ConfigurationBuilder()
@@ -46,7 +45,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CompanyInformation>(entity =>

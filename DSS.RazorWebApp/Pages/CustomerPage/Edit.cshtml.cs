@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
-using DSS.Business.Category;
 using DSS.Business.Business;
 
 namespace DSS.RazorWebApp.Pages.NewFolder
