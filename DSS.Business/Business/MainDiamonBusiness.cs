@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSS.Business.Category
+namespace DSS.Business.Business
 {
     public interface IMainDiamondBusiness
     {
@@ -22,19 +22,16 @@ namespace DSS.Business.Category
     }
     public class MainDiamondBusiness : IMainDiamondBusiness
     {
-        public readonly UnitOfWork _unitOfWork;
-        public MainDiamondBusiness()
-        {
+        private readonly UnitOfWork _unitOfWork;
+        public MainDiamondBusiness() { 
             _unitOfWork = new UnitOfWork();
         }
-
         public async Task<IBusinessResult> Create(MainDiamond mainDiamond)
         {
             try
             {
-                int result = await _unitOfWork.MainDiamondRepository.CreateAsync(mainDiamond);
-                if (result > 0)
-                {
+                int result = await _unitOfWork.mainDiamondRepository.CreateAsync(mainDiamond);
+                if (result > 0) {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
                 }
                 else
@@ -52,14 +49,12 @@ namespace DSS.Business.Category
         {
             try
             {
-
-
-                var mainDiamond = await _unitOfWork.MainDiamondRepository.GetByIdAsync(id);
-                if (mainDiamond != null)
-                {
-                    var result = await _unitOfWork.MainDiamondRepository.RemoveAsync(mainDiamond);
+                var mainDiamond = await _unitOfWork.mainDiamondRepository.GetByIdAsync(id);
+                if (mainDiamond != null) {
+                    var result = await _unitOfWork.mainDiamondRepository.RemoveAsync(mainDiamond);
                     if (result)
                     {
+
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
                     }
                     else
@@ -71,52 +66,44 @@ namespace DSS.Business.Category
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new BusinessResult(-4, ex.ToString());
             }
-            }
-
-
-
-
-
+        }
 
         public async Task<IBusinessResult> GetAll()
         {
             try
             {
+                var kinchana = await _unitOfWork.mainDiamondRepository.GetAllAsync();
+                if (kinchana == null) {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, kinchana);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
+        }
 
-
-                var mainDiamond = await _unitOfWork.MainDiamondRepository.GetAllAsync();
-                if (mainDiamond != null)
+        public async Task<IBusinessResult> GetById(int id)
+        {
+            try
+            {
+                var mainDiamond = await _unitOfWork.mainDiamondRepository.GetByIdAsync(id);
+                if (mainDiamond == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
                     return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, mainDiamond);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new BusinessResult(Const.ERROR_EXCEPTION,ex.Message);
-            }
-      }     
-        
-
-        public async Task<IBusinessResult> GetById(int id)
-        {
-            try
-            {
-                var mainDiamonds = await _unitOfWork.MainDiamondRepository.GetByIdAsync(id);
-                if(mainDiamonds != null)
-                {
-                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
-                }
-                else
-                {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, mainDiamonds);
                 }
             }
             catch (Exception ex)
@@ -129,31 +116,58 @@ namespace DSS.Business.Category
         {
             try
             {
-                _unitOfWork.MainDiamondRepository.CreateAsync(mainDiamond);
-                int result = await _unitOfWork.MainDiamondRepository.SaveAsync();
+                _unitOfWork.mainDiamondRepository.PrepareCreate(mainDiamond);
+                int result = await _unitOfWork.mainDiamondRepository.SaveAsync();
                 if(result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
-
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, mainDiamond);
+                    return new BusinessResult(Const.FAIL_CREATE_CODE, Const.FAIL_CREATE_MSG);
                 }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
-                return new BusinessResult(Const.ERROR_EXCEPTION,ex.Message);
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
             }
         }
 
-        public Task<IBusinessResult> Update(MainDiamond mainDiamond)
+        public async Task<IBusinessResult> Update(MainDiamond mainDiamond)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int result = await _unitOfWork.mainDiamondRepository.UpdateAsync(mainDiamond);
+                if(result > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_UPDATE_CODE, Const.FAIL_UPDATE_MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
+            }
         }
-    }
+            }
+        }
+    
+        
+
+        
+    
+
+       
+    
+
+       
+    
         
 
        
-    }
+
+      
 

@@ -12,6 +12,7 @@ namespace DSS.Data
     {
         private Net1704_221_6_DSSContext _unitOfWorkContext;
         private ExtraDiamondRepository _extraDiamond;
+        private MainDiamondRepository _mainDiamondRepository;
         public UnitOfWork()
         {
             _unitOfWorkContext ??= new Net1704_221_6_DSSContext();
@@ -25,6 +26,13 @@ namespace DSS.Data
             get
             {
                 return _extraDiamond ??= new Repository.ExtraDiamondRepository(_unitOfWorkContext);
+            }
+        }
+        public MainDiamondRepository mainDiamondRepository
+        {
+            get
+            {
+                return _mainDiamondRepository = new Repository.MainDiamondRepository(_unitOfWorkContext);
             }
         }
 
