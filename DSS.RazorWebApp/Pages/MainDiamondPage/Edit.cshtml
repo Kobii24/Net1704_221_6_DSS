@@ -1,0 +1,80 @@
+﻿@page
+@model DSS.RazorWebApp.Pages.MainDiamondPage.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Edit</h1>
+
+<h4>MainDiamond</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="mainDiamond.MainDiamondId" />
+            <div class="form-group">
+                <label asp-for="mainDiamond.Name" class="control-label"></label>
+                <input asp-for="mainDiamond.Name" class="form-control" />
+                <span asp-validation-for=" mainDiamond.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Origin" class="control-label"></label>
+                <input asp-for="mainDiamond.Origin" class="form-control" />
+                <span asp-validation-for="mainDiamond.Origin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.CaraWeight" class="control-label"></label>
+                <input asp-for="mainDiamond.CaraWeight" class="form-control" />
+                <span asp-validation-for="mainDiamond.CaraWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Clarity" class="control-label"></label>
+                <input asp-for="mainDiamond.Clarity" class="form-control" />
+                <span asp-validation-for="mainDiamond.Clarity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Color" class="control-label"></label>
+                <input asp-for="mainDiamond.Color" class="form-control" />
+                <span asp-validation-for="mainDiamond.Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Describe" class="control-label"></label>
+                <input asp-for="mainDiamond.Describe" class="form-control" />
+                <span asp-validation-for="mainDiamond.Describe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Quantity" class="control-label"></label>
+                <input asp-for="mainDiamond.Quantity" class="form-control" />
+                <span asp-validation-for="mainDiamond.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Cut" class="control-label"></label>
+                <input asp-for="mainDiamond.Cut" class="form-control" />
+                <span asp-validation-for="mainDiamond.Cut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mainDiamond.Price" class="control-label"></label>
+                <input asp-for="mainDiamond.Price" class="form-control" />
+                <span asp-validation-for="mainDiamond.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="mainDiamond.Status" /> @Html.DisplayNameFor(model => model.mainDiamond.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

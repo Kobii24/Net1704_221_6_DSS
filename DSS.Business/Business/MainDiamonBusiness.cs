@@ -132,6 +132,10 @@ namespace DSS.Business.Business
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
             }
         }
+        public async Task<int> SaveAll()
+        {
+            return await _unitOfWork.mainDiamondRepository.SaveAsync();
+        }
 
         public async Task<IBusinessResult> Update(MainDiamond mainDiamond)
         {
