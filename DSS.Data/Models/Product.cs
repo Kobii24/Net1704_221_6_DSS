@@ -7,7 +7,7 @@ namespace DSS.Data.Models;
 
 public partial class Product
 {
-    public long ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public string Name { get; set; }
 

@@ -8,20 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
 using DSS.Business.Business;
 
-namespace DSS.RazerWebApp.Pages.OrderPage
+namespace DSS.RazorWebApp.Pages.MainDiamondPage
 {
     public class IndexModel : PageModel
     {
-        private readonly Order_Business _business;
+        private readonly MainDiamondBusiness _business;
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 6;
         public int TotalPages { get; set; }
+
+
         public IndexModel()
         {
-            _business ??= new Order_Business();
+            _business ??= new MainDiamondBusiness();
         }
 
-        public IList<Order> Order { get;set; } = default!;
+        public IList<MainDiamond> MainDiamond { get; set; } = default!;
 
         public async Task OnGetAsync(string searchBy, string search, int? pageNumber)
         {
@@ -29,22 +31,22 @@ namespace DSS.RazerWebApp.Pages.OrderPage
 
             if (result != null && result.Status > 0 && result.Data != null/*!string.IsNullOrEmpty(search)*/)
             {
-                Order = (List<Order>)result.Data;
+                MainDiamond = (List<MainDiamond>)result.Data;
             }
 
             if (search == null)
             {
-                Order = Order.ToList();
+                MainDiamond = MainDiamond.ToList();
             }
             else
             {
-                if (searchBy == "PaymentMethod")
+                if (searchBy == "Name")
                 {
-                    Order = Order.Where(x => x.PaymentMethod.ToLower().Contains(search.ToLower()) /*|| search == null*/).ToList();
+                    MainDiamond = MainDiamond.Where(x => x.Name.ToLower().Contains(search.ToLower()) /*|| search == null*/).ToList();
                 }
-                else if (searchBy == "PaymentStatus")
+                else if (searchBy == "Origin")
                 {
-                    Order = Order.Where(x => x.PaymentStatus.ToLower().Contains(search.ToLower()) /*|| search == null*/).ToList();
+                    MainDiamond = MainDiamond.Where(x => x.Origin.ToLower().Contains(search.ToLower()) /*|| search == null*/).ToList();
                 }
                 else
                 {
@@ -53,21 +55,21 @@ namespace DSS.RazerWebApp.Pages.OrderPage
                         try
                         {
                             if (!char.IsDigit(c))
-                                Order = Order.ToList();
+                                MainDiamond = MainDiamond.ToList();
                             else
-                                Order = Order.Where(x => x.CustomerId == Convert.ToInt32(search) /*|| search == null*/).ToList();
+                                MainDiamond = MainDiamond.Where(x => x.Quantity == Convert.ToInt64(search) /*|| search == null*/).ToList();
                         }
                         catch (FormatException ex)
                         {
                             Console.WriteLine(ex.Message);
-                            Order = Order.ToList<Order>();
+                            MainDiamond = MainDiamond.ToList();
                         }
                     }
                 }
             }
             PageNumber = pageNumber ?? 1;
-            TotalPages = (int)System.Math.Ceiling(Order.ToList().Count / (double)PageSize);
-            Order = Order.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
+            TotalPages = (int)System.Math.Ceiling(MainDiamond.ToList().Count / (double)PageSize);
+            MainDiamond = MainDiamond.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
         }
     }
 }

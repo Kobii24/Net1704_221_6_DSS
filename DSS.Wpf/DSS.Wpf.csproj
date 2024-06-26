@@ -12,4 +12,10 @@
     <ProjectReference Include="..\DSS.Business\DSS.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MainWindow.xaml.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

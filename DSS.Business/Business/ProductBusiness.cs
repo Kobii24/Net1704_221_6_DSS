@@ -1,7 +1,6 @@
 ﻿using DSS.Business.Base;
 using DSS.Common;
 using DSS.Data;
-using DSS.Data.Dao;
 using DSS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -11,31 +10,30 @@ using System.Threading.Tasks;
 
 namespace DSS.Business.Business
 {
-    public interface IExtraDiamondBusiness
+    public interface IProductBusiness
     {
         Task<IBusinessResult> GetAll();
-        Task<IBusinessResult> Create(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> Create(Product product);
         Task<IBusinessResult> GetById(int code);
-      
-        Task<IBusinessResult> Save(ExtraDiamond extraDiamond);
-        Task<IBusinessResult> Update(ExtraDiamond extraDiamond);
+        Task<IBusinessResult> Save(Product product);
+
+        Task<IBusinessResult> Update(Product product);
         Task<IBusinessResult> DeleteById(int code);
     }
-    public class ExtraDiamondBusiness : IExtraDiamondBusiness
+    public class ProductBusiness : IProductBusiness
     {
-        //private readonly ExtraDiamondDAO _DAO;
         private readonly UnitOfWork _unitOfWork;
-        public ExtraDiamondBusiness()
+        public ProductBusiness()
         {
             //_DAO = new ExtraDiamondDAO();
             _unitOfWork ??= new UnitOfWork();
         }
 
-        public async Task<IBusinessResult> Create(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Create(Product product)
         {
             try
             {
-                int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
+                int result = await _unitOfWork.ProductRepository.CreateAsync(product);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
@@ -55,10 +53,10 @@ namespace DSS.Business.Business
         {
             try
             {
-                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
-                if (extraDiamond != null)
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(code);
+                if (product != null)
                 {
-                    var result = await _unitOfWork.ExtraDiamondRepository.RemoveAsync(extraDiamond);
+                    var result = await _unitOfWork.ProductRepository.RemoveAsync(product);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -87,15 +85,15 @@ namespace DSS.Business.Business
                 #endregion
 
                 //var currencies = _DAO.GetAll();
-                var extraDiamonds = await _unitOfWork.ExtraDiamondRepository.GetAllAsync();
+                var products = await _unitOfWork.ProductRepository.GetAllAsync();
 
-                if (extraDiamonds == null)
+                if (products == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamonds);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, products);
                 }
             }
             catch (Exception ex)
@@ -105,7 +103,7 @@ namespace DSS.Business.Business
         }
         public async Task<int> SaveAll()
         {
-            return await _unitOfWork.ExtraDiamondRepository.SaveAsync();
+            return await _unitOfWork.ProductRepository.SaveAsync();
         }
         public async Task<IBusinessResult> GetById(int code)
         {
@@ -114,15 +112,15 @@ namespace DSS.Business.Business
                 #region Business rule
                 #endregion
 
-                var extraDiamond = await _unitOfWork.ExtraDiamondRepository.GetByIdAsync(code);
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(code);
 
-                if (extraDiamond == null)
+                if (product == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, extraDiamond);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, product);
                 }
             }
             catch (Exception ex)
@@ -131,13 +129,13 @@ namespace DSS.Business.Business
             }
         }
 
-        public async Task<IBusinessResult> Save(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Save(Product product)
         {
             try
             {
                 //int result = await _unitOfWork.ExtraDiamondRepository.CreateAsync(extraDiamond);
-                _unitOfWork.ExtraDiamondRepository.PrepareCreate(extraDiamond);
-                int result = await _unitOfWork.ExtraDiamondRepository.SaveAsync();
+                _unitOfWork.ProductRepository.PrepareCreate(product);
+                int result = await _unitOfWork.ProductRepository.SaveAsync();
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -153,11 +151,11 @@ namespace DSS.Business.Business
             }
         }
 
-        public async Task<IBusinessResult> Update(ExtraDiamond extraDiamond)
+        public async Task<IBusinessResult> Update(Product product)
         {
             try
             {
-                int result = await _unitOfWork.ExtraDiamondRepository.UpdateAsync(extraDiamond);
+                int result = await _unitOfWork.ProductRepository.UpdateAsync(product);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
@@ -174,3 +172,4 @@ namespace DSS.Business.Business
         }
     }
 }
+
