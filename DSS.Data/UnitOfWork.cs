@@ -67,7 +67,7 @@ namespace DSS.Data
         {
             get
             {
-                return _product ??= new Repository.ProductRepository(_unitOfWorkContext);
+                return _product ??= new ProductRepository(_unitOfWorkContext);
             }
         }
 
