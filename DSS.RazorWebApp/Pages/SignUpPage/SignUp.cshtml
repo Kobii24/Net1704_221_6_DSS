@@ -1,0 +1,88 @@
+﻿@page "/SignUp"
+@model DSS.RazorWebApp.Pages.SignUpPage.SignUpModel
+@{
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignUp</title>
+</head>
+<body>
+    <h3>
+        Sign Up
+    </h3>
+    <form method="post" asp-page="signup">
+        <table>
+            <tr>
+                <td>UserEmail</td>
+                <td>
+                    <input asp-for="@Model.customer.Email" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input type="password" asp-for="@Model.customer.Password" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.Name" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.Phone" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.Address" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    DateOfBirth
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.DateOfBirth" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.Gender" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    <input asp-for="@Model.customer.Status" />
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Register" />
+                    <a class="btn btn-secondary" asp-page="/SignIn">Sign in</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

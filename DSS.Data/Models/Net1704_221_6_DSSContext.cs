@@ -9,15 +9,14 @@ namespace DSS.Data.Models;
 
 public partial class Net1704_221_6_DSSContext : DbContext
 {
-    public Net1704_221_6_DSSContext()
-    {
-        
-    }
     public Net1704_221_6_DSSContext(DbContextOptions<Net1704_221_6_DSSContext> options)
         : base(options)
     {
     }
-
+    public Net1704_221_6_DSSContext()
+    {
+        
+    }
     public virtual DbSet<CompanyInformation> CompanyInformations { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
@@ -87,13 +86,11 @@ public partial class Net1704_221_6_DSSContext : DbContext
 
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.Address)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("address");
             entity.Property(e => e.DateOfBirth).HasColumnName("date_of_birth");
             entity.Property(e => e.Email)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("email");
@@ -102,17 +99,14 @@ public partial class Net1704_221_6_DSSContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("gender");
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("name");
             entity.Property(e => e.Password)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("password");
             entity.Property(e => e.Phone)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("phone");
