@@ -17,6 +17,7 @@ namespace DSS.Data
         private DiamondShellRepository _diamondshellRepository;
         private OrderRepository _order;
         private OrderDetailRepository _orderDetail;
+        private ProductRepository _product;
         private MainDiamondRepository _mainDiamondRepository;
         public UnitOfWork()
         {
@@ -60,6 +61,13 @@ namespace DSS.Data
             get
             {
                 return _orderDetail ??= new OrderDetailRepository();
+            }
+        }
+        public ProductRepository ProductRepository
+        {
+            get
+            {
+                return _product ??= new Repository.ProductRepository(_unitOfWorkContext);
             }
         }
 
