@@ -13,11 +13,11 @@
     {
         <b>Search By: </b>
         @Html.RadioButton("SearchBy", "Name", true) <text>Name</text>
-        @* @Html.RadioButton("SearchBy", "Title") <text>Title</text> *@
+        @Html.RadioButton("SearchBy", "Size") <text>Size</text>
         @Html.RadioButton("SearchBy", "Quantity") <text>Quantity</text>
         <br />
         @Html.TextBox("search", "", htmlAttributes: new { @class = "w-50 form-control" })
-        <input class="btn btn-success" type="submit" value="Search" />
+        <input class="btn btn-success mt-3" type="submit" value="Search" />
     }
 </p>
 <table class="table">

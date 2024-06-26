@@ -40,10 +40,24 @@ namespace DSS.RazorWebApp.Pages.ProductPage
                 {
                     Product = Product.Where(x => x.Name.ToLower().Contains(search.ToLower()) /*|| search == null*/).ToList();
                 }
-                /*else if (searchBy == "Size")
+                else if (searchBy == "Size")
                 {
-                    Product = Product.Where(x => x.Size.ToLower().Contains(search.ToLower()) *//*|| search == null*//*).ToList();
-                }*/
+                    foreach (char c in search)
+                    {
+                        try
+                        {
+                            if (!char.IsDigit(c))
+                                Product = Product.ToList();
+                            else
+                                Product = Product.Where(x => x.Size == Convert.ToInt32(search) /*|| search == null*/).ToList();
+                        }
+                        catch (FormatException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Product = Product.ToList();
+                        }
+                    }
+                }
                 else
                 {
                     foreach (char c in search)
