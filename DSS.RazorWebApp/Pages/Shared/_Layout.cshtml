@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,18 +27,31 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown">
-                                Category
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-page="/OrderPage/Index">Order</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/OrderDetailPage/Index">Order Detail</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/ExtraDiamondPage/Index">Extra Diamond</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/CustomerPage/Index">Customer</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/DiamondShellPage/Index">Diamond Shell</a></li>
-                            </ul>
-                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/SignIn">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/SignUpPage/SignUp">Sign Up</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Category
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/OrderPage/Index">Order</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/OrderDetailPage/Index">Order Detail</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/ExtraDiamondPage/Index">Extra Diamond</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/CustomerPage/Index">Customer</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/DiamondShellPage/Index">Diamond Shell</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/MainDiamondPage/Index">Main Diamond</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
