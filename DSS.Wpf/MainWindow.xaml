@@ -9,7 +9,7 @@
     <Grid>
         <Menu Height="30" Name="menu1" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="16" FontWeight="Bold">
             <MenuItem Header="Menu" IsCheckable="False" FontSize="16">
-                <MenuItem Header="Extra Diamond" IsCheckable="False" FontSize="12" Click="Open_wExtraDiamond_Click">
+                <MenuItem Header="Diamond Shell" IsCheckable="False" FontSize="12" Click="Open_wDiamondShell_Click">
 
                 </MenuItem>
             </MenuItem>

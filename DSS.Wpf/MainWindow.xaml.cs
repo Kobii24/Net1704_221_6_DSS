@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using DSS.Wpf.UI;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,6 +24,12 @@ namespace DSS.Wpf
         private async void Open_wExtraDiamond_Click(object sender, RoutedEventArgs e)
         {
             var p = new wExtraDiamond();
+            p.Owner = this;
+            p.Show();
+        }
+        private async void Open_wDiamondShell_Click(object sender, RoutedEventArgs e)
+        {
+            var p = new wDiamondShell();
             p.Owner = this;
             p.Show();
         }
