@@ -1,5 +1,5 @@
 ﻿@page
-@model DSS.RazorWebApp.Pages.DiamondShellPage.DeleteModel
+@model DSS.RazorWebApp.Pages.Temp.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -19,22 +19,52 @@
             @Html.DisplayFor(model => model.DiamondShell.Name)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiamondShell.Material)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiamondShell.Material)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiamondShell.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiamondShell.Gender)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DiamondShell.Origin)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DiamondShell.Origin)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DiamondShell.Status)
+            @Html.DisplayNameFor(model => model.DiamondShell.Complexibility)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DiamondShell.Status)
+            @Html.DisplayFor(model => model.DiamondShell.Complexibility)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiamondShell.WaitingTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiamondShell.WaitingTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiamondShell.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiamondShell.Quantity)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DiamondShell.Price)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DiamondShell.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiamondShell.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiamondShell.Status)
         </dd>
     </dl>
     

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DSS.Data.Models;
 using DSS.Business.Category;
 
-namespace DSS.RazorWebApp.Pages.DiamondShellPage
+namespace DSS.RazorWebApp.Pages.Temp
 {
     public class CreateModel : PageModel
     {

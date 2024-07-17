@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
 using DSS.Business.Category;
 
-namespace DSS.RazorWebApp.Pages.DiamondShellPage
+namespace DSS.RazorWebApp.Pages.Temp
 {
     public class IndexModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace DSS.RazorWebApp.Pages.DiamondShellPage
             _business ??= new DiamondShellBusiness();
         }
 
-        public IList<DiamondShell> DiamondShell { get;set; } = default!;
+        public IList<DiamondShell> DiamondShell { get; set; } = default!;
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 6;
         public int TotalPages { get; set; }

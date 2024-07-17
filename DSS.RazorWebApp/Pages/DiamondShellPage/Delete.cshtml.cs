@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DSS.Data.Models;
 using DSS.Business.Category;
 
-namespace DSS.RazorWebApp.Pages.DiamondShellPage
+namespace DSS.RazorWebApp.Pages.Temp
 {
     public class DeleteModel : PageModel
     {

@@ -1,5 +1,5 @@
 ﻿@page
-@model DSS.RazorWebApp.Pages.DiamondShellPage.EditModel
+@model DSS.RazorWebApp.Pages.Temp.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,19 +20,44 @@
                 <span asp-validation-for="DiamondShell.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="DiamondShell.Material" class="control-label"></label>
+                <input asp-for="DiamondShell.Material" class="form-control" />
+                <span asp-validation-for="DiamondShell.Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiamondShell.Gender" class="control-label"></label>
+                <input asp-for="DiamondShell.Gender" class="form-control" />
+                <span asp-validation-for="DiamondShell.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DiamondShell.Origin" class="control-label"></label>
                 <input asp-for="DiamondShell.Origin" class="form-control" />
                 <span asp-validation-for="DiamondShell.Origin" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DiamondShell.Status" /> @Html.DisplayNameFor(model => model.DiamondShell.Status)
-                </label>
+            <div class="form-group">
+                <label asp-for="DiamondShell.Complexibility" class="control-label"></label>
+                <input asp-for="DiamondShell.Complexibility" class="form-control" />
+                <span asp-validation-for="DiamondShell.Complexibility" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiamondShell.WaitingTime" class="control-label"></label>
+                <input asp-for="DiamondShell.WaitingTime" class="form-control" />
+                <span asp-validation-for="DiamondShell.WaitingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiamondShell.Quantity" class="control-label"></label>
+                <input asp-for="DiamondShell.Quantity" class="form-control" />
+                <span asp-validation-for="DiamondShell.Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DiamondShell.Price" class="control-label"></label>
                 <input asp-for="DiamondShell.Price" class="form-control" />
                 <span asp-validation-for="DiamondShell.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DiamondShell.Status" /> @Html.DisplayNameFor(model => model.DiamondShell.Status)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
