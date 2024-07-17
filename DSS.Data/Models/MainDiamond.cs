@@ -13,7 +13,7 @@ public partial class MainDiamond
 
     public string Origin { get; set; }
 
-    public short CaraWeight { get; set; }
+    public int CaraWeight { get; set; }
 
     public string Clarity { get; set; }
 
@@ -21,11 +21,13 @@ public partial class MainDiamond
 
     public string Describe { get; set; }
 
-    public long Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public long Cut { get; set; }
+    public int Cut { get; set; }
 
     public decimal Price { get; set; }
 
     public bool Status { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

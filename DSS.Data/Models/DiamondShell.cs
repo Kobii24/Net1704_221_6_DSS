@@ -11,9 +11,21 @@ public partial class DiamondShell
 
     public string Name { get; set; }
 
+    public string Material { get; set; }
+
+    public string Gender { get; set; }
+
     public string Origin { get; set; }
+
+    public string Complexibility { get; set; }
+
+    public string WaitingTime { get; set; }
+
+    public int Quantity { get; set; }
+
+    public double Price { get; set; }
 
     public bool Status { get; set; }
 
-    public double Price { get; set; }
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

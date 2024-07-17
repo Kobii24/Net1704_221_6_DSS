@@ -24,4 +24,8 @@ public partial class Customer
     public string Gender { get; set; }
 
     public bool? Status { get; set; }
+
+    public string Describe { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

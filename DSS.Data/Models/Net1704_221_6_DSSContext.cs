@@ -13,10 +13,24 @@ public partial class Net1704_221_6_DSSContext : DbContext
         : base(options)
     {
     }
+
     public Net1704_221_6_DSSContext()
     {
-        
     }
+
+    public static string GetConnectionString(string connectionStringName)
+    {
+        var config = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        string connectionString = config.GetConnectionString(connectionStringName);
+        return connectionString;
+    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
+
     public virtual DbSet<CompanyInformation> CompanyInformations { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
@@ -32,19 +46,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-
-    public static string GetConnectionString(string connectionStringName)
-    {
-        var config = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        string connectionString = config.GetConnectionString(connectionStringName);
-        return connectionString;
-    }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -86,11 +87,16 @@ public partial class Net1704_221_6_DSSContext : DbContext
 
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.Address)
+                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("address");
             entity.Property(e => e.DateOfBirth).HasColumnName("date_of_birth");
+            entity.Property(e => e.Describe)
+                .HasColumnType("text")
+                .HasColumnName("describe");
             entity.Property(e => e.Email)
+                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("email");
@@ -99,14 +105,17 @@ public partial class Net1704_221_6_DSSContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("gender");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("name");
             entity.Property(e => e.Password)
+                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("password");
             entity.Property(e => e.Phone)
+                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("phone");
@@ -120,6 +129,21 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.ToTable("Diamond_Shell");
 
             entity.Property(e => e.DiamondShellId).HasColumnName("diamondShell_id");
+            entity.Property(e => e.Complexibility)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsFixedLength()
+                .HasColumnName("complexibility");
+            entity.Property(e => e.Gender)
+                .IsRequired()
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("gender");
+            entity.Property(e => e.Material)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsFixedLength()
+                .HasColumnName("material");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(10)
@@ -131,7 +155,13 @@ public partial class Net1704_221_6_DSSContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("origin");
             entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.WaitingTime)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsFixedLength()
+                .HasColumnName("waiting_time");
         });
 
         modelBuilder.Entity<ExtraDiamond>(entity =>
@@ -141,13 +171,26 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.ToTable("Extra_Diamond");
 
             entity.Property(e => e.ExtraDiamondId).HasColumnName("extraDiamond_id");
+            entity.Property(e => e.Carat)
+                .HasColumnType("decimal(18, 0)")
+                .HasColumnName("carat");
+            entity.Property(e => e.Color)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("color");
+            entity.Property(e => e.Cut)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("cut");
+            entity.Property(e => e.Describe)
+                .HasColumnType("text")
+                .HasColumnName("describe");
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(255)
                 .IsFixedLength()
                 .HasColumnName("name");
             entity.Property(e => e.Price)
-                .HasColumnType("decimal(18, 0)")
+                .HasColumnType("decimal(8, 2)")
                 .HasColumnName("price");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Status).HasColumnName("status");
@@ -203,21 +246,40 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.ToTable("Order");
 
             entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.Address)
+                .HasColumnType("text")
+                .HasColumnName("address");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+            entity.Property(e => e.CustomerName)
+                .HasMaxLength(50)
+                .HasColumnName("customer_name");
+            entity.Property(e => e.DiscountCode)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("discount_code");
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .HasColumnName("email");
             entity.Property(e => e.OrderDate).HasColumnName("order_date");
             entity.Property(e => e.PaymentMethod)
-                .IsRequired()
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("payment_method");
             entity.Property(e => e.PaymentStatus)
-                .IsRequired()
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("payment_status");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("phone");
             entity.Property(e => e.TotalAmount)
                 .HasColumnType("decimal(8, 2)")
                 .HasColumnName("total_amount");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK_Order_Customer");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -230,9 +292,35 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.Amount)
                 .HasColumnType("decimal(8, 2)")
                 .HasColumnName("amount");
+            entity.Property(e => e.DeleveryName)
+                .HasMaxLength(50)
+                .HasColumnName("delevery_name");
+            entity.Property(e => e.DeleveryStaffName)
+                .HasMaxLength(50)
+                .HasColumnName("delevery_staff_name");
+            entity.Property(e => e.Desctiption)
+                .HasColumnType("text")
+                .HasColumnName("desctiption");
+            entity.Property(e => e.NameStore)
+                .HasMaxLength(50)
+                .HasColumnName("name_store");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.Status)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("status");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Detail_Order");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Detail_Product");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -244,7 +332,6 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.DiamondShellId).HasColumnName("diamond_shell_id");
-            entity.Property(e => e.ExtraDiamondId).HasColumnName("extra_diamond_id");
             entity.Property(e => e.Fee).HasColumnName("fee");
             entity.Property(e => e.MainDiamondId).HasColumnName("main_diamond_id");
             entity.Property(e => e.Name)
@@ -257,6 +344,21 @@ public partial class Net1704_221_6_DSSContext : DbContext
             entity.Property(e => e.Size).HasColumnName("size");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.TotalAmount).HasColumnName("total_amount");
+
+            entity.HasOne(d => d.DiamondShell).WithMany(p => p.Products)
+                .HasForeignKey(d => d.DiamondShellId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Product_Diamond_Shell");
+
+            entity.HasOne(d => d.MainDiamond).WithMany(p => p.Products)
+                .HasForeignKey(d => d.MainDiamondId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Product_Main_Diamond");
+
+            entity.HasOne(d => d.NumberExDiamondNavigation).WithMany(p => p.Products)
+                .HasForeignKey(d => d.NumberExDiamond)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Product_Extra_Diamond");
         });
 
         OnModelCreatingPartial(modelBuilder);

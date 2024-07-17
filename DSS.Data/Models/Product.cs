@@ -11,15 +11,13 @@ public partial class Product
 
     public string Name { get; set; }
 
-    public long MainDiamondId { get; set; }
+    public int MainDiamondId { get; set; }
 
-    public long ExtraDiamondId { get; set; }
+    public int NumberExDiamond { get; set; }
 
-    public long NumberExDiamond { get; set; }
+    public int DiamondShellId { get; set; }
 
-    public long DiamondShellId { get; set; }
-
-    public long Quantity { get; set; }
+    public int Quantity { get; set; }
 
     public int Size { get; set; }
 
@@ -30,4 +28,12 @@ public partial class Product
     public double Fee { get; set; }
 
     public double TotalAmount { get; set; }
+
+    public virtual DiamondShell DiamondShell { get; set; }
+
+    public virtual MainDiamond MainDiamond { get; set; }
+
+    public virtual ExtraDiamond NumberExDiamondNavigation { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

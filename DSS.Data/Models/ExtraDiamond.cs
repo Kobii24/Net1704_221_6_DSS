@@ -13,9 +13,19 @@ public partial class ExtraDiamond
 
     public string Title { get; set; }
 
-    public int Quantity { get; set; }
+    public int? Quantity { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal? Price { get; set; }
 
-    public bool Status { get; set; }
+    public bool? Status { get; set; }
+
+    public decimal? Carat { get; set; }
+
+    public string Color { get; set; }
+
+    public string Cut { get; set; }
+
+    public string Describe { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

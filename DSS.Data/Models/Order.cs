@@ -9,13 +9,27 @@ public partial class Order
 {
     public int OrderId { get; set; }
 
-    public int CustomerId { get; set; }
+    public int? CustomerId { get; set; }
 
-    public DateOnly OrderDate { get; set; }
+    public DateOnly? OrderDate { get; set; }
 
-    public decimal TotalAmount { get; set; }
+    public decimal? TotalAmount { get; set; }
 
     public string PaymentMethod { get; set; }
 
     public string PaymentStatus { get; set; }
+
+    public string Email { get; set; }
+
+    public string Address { get; set; }
+
+    public string Phone { get; set; }
+
+    public string CustomerName { get; set; }
+
+    public string DiscountCode { get; set; }
+
+    public virtual Customer Customer { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }
