@@ -24,33 +24,36 @@ namespace DSS.RazorWebApp.Pages.Temp
         public int PageSize { get; set; } = 6;
         public int TotalPages { get; set; }
 
-        public async Task OnGetAsync(string searchBy, string search, int? pageNumber)
+        public async Task OnGetAsync(string searchName, string searchMaterial, string searchGender, string searchOrigin, string searchPrice, string searchComplexibility, int? pageNumber)
         {
             var result = await _business.GetAll();
             if (result != null && result.Status > 0 && result.Data != null)
             {
                 DiamondShell = (List<DiamondShell>)result.Data;
             }
-            if (search != null)
+            if (!string.IsNullOrEmpty(searchName))
             {
-                if (searchBy == "Name")
-                {
-                    DiamondShell = DiamondShell.Where(item => item.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
-                }
-                else if (searchBy == "Origin")
-                {
-                    DiamondShell = DiamondShell.Where(item => item.Origin.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
-                }
-                else if (searchBy == "Price")
-                {
-                    DiamondShell = DiamondShell.Where(item =>
-                    {
-                        return item.Price == Convert.ToDouble(search);
-                    }).ToList();
-                }
+                DiamondShell = DiamondShell.Where(item => item.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
             }
+            if (!string.IsNullOrEmpty(searchMaterial))
+            {
+                DiamondShell = DiamondShell.Where(item => item.Material.Contains(searchMaterial, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            if (!string.IsNullOrEmpty(searchGender))
+            {
+                DiamondShell = DiamondShell.Where(item => item.Gender.Contains(searchGender, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            if (!string.IsNullOrEmpty(searchOrigin))
+            {
+                DiamondShell = DiamondShell.Where(item => item.Origin.Contains(searchOrigin, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            if (!string.IsNullOrEmpty(searchComplexibility))
+            {
+                DiamondShell = DiamondShell.Where(item => item.Complexibility.Contains(searchComplexibility, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
             PageNumber = pageNumber ?? 1;
-            TotalPages = (int)System.Math.Ceiling(DiamondShell.ToList().Count / (double)PageSize);
+            TotalPages = (int)System.Math.Ceiling(DiamondShell.Count / (double)PageSize);
             DiamondShell = DiamondShell.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
         }
     }

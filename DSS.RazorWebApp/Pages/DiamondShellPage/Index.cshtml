@@ -13,16 +13,31 @@
 <p>
     @using (Html.BeginForm("/Index", "Home", FormMethod.Get))
     {
-    <p>
-        <b>Search By: </b>
-            @Html.RadioButton("SearchBy", "Name", true) <text>Name</text>
-            @Html.RadioButton("SearchBy", "Origin", true) <text>Origin</text>
-            @Html.RadioButton("SearchBy", "Price", true) <text>Price</text>
-    </p>
-    <p>
-            @Html.TextBox("Search", "", htmlAttributes: new { @class = "w-50 form-control" })
-    </p>
-    <input class="btn btn-success" type="submit" value="Search" />
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <div style="flex: 1; min-width: 150px;">
+                <label for="SearchName"><b>Name:</b></label>
+                @Html.TextBox("SearchName", "", htmlAttributes: new { @class = "form-control", @id = "SearchName" })
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <label for="SearchMaterial"><b>Material:</b></label>
+                @Html.TextBox("SearchMaterial", "", htmlAttributes: new { @class = "form-control", @id = "SearchMaterial" })
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <label for="SearchGender"><b>Gender:</b></label>
+                @Html.TextBox("SearchGender", "", htmlAttributes: new { @class = "form-control", @id = "SearchGender" })
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <label for="SearchOrigin"><b>Origin:</b></label>
+                @Html.TextBox("SearchOrigin", "", htmlAttributes: new { @class = "form-control", @id = "SearchOrigin" })
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <label for="SearchComplexibility"><b>Complexibility:</b></label>
+                @Html.TextBox("SearchComplexibility", "", htmlAttributes: new { @class = "form-control", @id = "SearchComplexibility" })
+            </div>
+            <div style="flex: 0 0 auto; align-self: flex-end;">
+                <input class="btn btn-success" type="submit" value="Search" />
+            </div>
+        </div>
     }
 </p>
 <table class="table">
@@ -97,3 +112,27 @@
 }
     </tbody>
 </table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @if (Model.PageNumber == 1) {
+        <text>disabled</text>
+}">
+            <a class="page-link" href="@Url.Action("Index", "DiamondShells", new { pageNumber = Model.PageNumber - 1 })">Previous</a>
+        </li>
+
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @if (i == Model.PageNumber) {
+        <text>active</text>
+}">
+                        <a class="page-link" href="@Url.Action("Index", "DiamondShells", new { pageNumber = i })">@i</a>
+                </li>
+        }
+
+        <li class="page-item @if (Model.PageNumber == Model.TotalPages) {
+        <text>disabled</text>
+}">
+            <a class="page-link" href="@Url.Action("Index", "DiamondShells", new { pageNumber = Model.PageNumber + 1 })">Next</a>
+        </li>
+    </ul>
+</nav>
